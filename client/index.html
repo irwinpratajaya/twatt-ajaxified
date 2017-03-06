@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>TWATT!!</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <h1>TWEET from TWATT!!</h1>
+    <input type="text" name="twettwat" value="" placeholder="twat!!">
+    <button id="sendTweet" onclick="sendTweet()">TWATT!</button>
+
+    <h1>TWATT!! SEARCH</h1>
+    <input type="text" name="search" value="detikcom" placeholder="contoh: detikcom">
+    <button id="twatt" type="button" name="button">twatt!!</button>
+
+    <ul></ul>
+
+    <script>
+      function twettwat() {
+        // console.log('------------adsadasdsa------------')
+        $.ajax({
+          url: 'http://localhost:3000/twatt',
+          type: 'POST',
+          data: {
+            twatt: $('input[name="sendtwatt"]').val()
+          },
+          success: function(data) {
+            data = JSON.parse(data)
+            // for (var i = 0; i < data.statuses.length; i++) {
+            //   let list = `<li class=""> <b>Name:</b> ${data.statuses[i].user.name} <b>Twatt!!</b> ${data.statuses[i].text} <b>Time:</b> ${data.statuses[i].created_at}</li>`
+            //   $("ul").append(list)
+            // }
+            console.log(twatt)
+          },
+          fail: function(data) {
+            console.log("ERROR")
+          }
+        })
+      }
+
+
+      $(document).ready(function () {
+        $('#twatt').click(function() {
+          $.ajax({
+            url: 'http://localhost:3000/' + $('input[name="search"]').val(),
+            type: 'GET',
+            success: function(data) {
+              data = JSON.parse(data)
+              for (var i = 0; i < data.statuses.length; i++) {
+                let list = `<li class=""> <b>Name:</b> ${data.statuses[i].user.name} <b>Twatt!!</b> ${data.statuses[i].text} <b>Time:</b> ${data.statuses[i].created_at}</li>`
+                $("ul").append(list)
+              }
+              console.log(data.statuses)
+            },
+            fail: function(data) {
+              console.log("ERROR")
+            }
+          })
+        })
+      })
+    </script>
+  </body>
+</html>
